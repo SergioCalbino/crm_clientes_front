@@ -1,12 +1,15 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Swal from "sweetalert2"
 import clienteAxios from "../../config/axios"
+import { CRMContext } from "../../context/CRMContext"
 
 
 const NuevoProducto = () => {
   
   const navigate = useNavigate()
+  const [ auth, setAuth ] = useContext(CRMContext);
+
 
 
   const [producto, setProducto] = useState({
@@ -40,7 +43,7 @@ const NuevoProducto = () => {
       //Almacenar en la DB
      const res =  await clienteAxios.post('/productos', formData , {
         headers: {
-          'Content-Type' : 'multipart/form-data'
+          Authorization: `Bearer ${auth.token} `
         }
       })
       Swal.fire(

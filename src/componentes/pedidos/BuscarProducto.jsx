@@ -12,12 +12,14 @@ const BuscarProducto = ({ buscarProducto, leerDatosDeBusqueda }) => {
         <label>Productos:</label>
         <input type="text" 
             placeholder="Nombre Productos" 
-            name="productos" />
+            name="productos" 
+            onChange={leerDatosDeBusqueda}
+
+            />
       </div>
       <input type='submit'
             className="btn btn-azul btn-block"
             placeholder='Buscar Producto'
-            onChange={leerDatosDeBusqueda}
        />
     </form>
   );

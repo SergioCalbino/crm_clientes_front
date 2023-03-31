@@ -11,7 +11,7 @@ const Login = () => {
     //Auth y Token
 
     const [auth, setAuth ] = useContext(CRMContext)
-    console.log(auth)
+ 
 
     const navigate = useNavigate()
     const [usuario, setUsuario] = useState({})
@@ -31,6 +31,7 @@ const Login = () => {
 
         clienteAxios.post('/iniciar-sesion', usuario)
         .then(({ data }) => {
+          
             const token = data.token
             localStorage.setItem('token', token)
             //Colocarlo en el State
