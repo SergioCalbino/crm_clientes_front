@@ -1,9 +1,13 @@
+import { useContext } from "react"
 import { Link } from "react-router-dom"
 import Swal from "sweetalert2"
 import clienteAxios from "../../config/axios"
+import { CRMContext } from "../../context/CRMContext"
 
 
 const Cliente = ({_id, nombre, apellido, empresa, email, telefono }) => {
+
+    const [auth, setAuth] = useContext(CRMContext)
 
     const onDelete = (id) => {
         Swal.fire({
@@ -20,7 +24,11 @@ const Cliente = ({_id, nombre, apellido, empresa, email, telefono }) => {
             if (result.isConfirmed) {
               
               //Llamar a la APi para borrar
-              clienteAxios.delete(`/clientes/${id}`)
+              clienteAxios.delete(`/clientes/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${auth.token} `
+                  }
+             } )
                 .then(res => {
                     Swal.fire(
                         'Eliminado!',

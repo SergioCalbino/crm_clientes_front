@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from "sweetalert2";
 import clienteAxios from "../../config/axios"
+import { CRMContext } from "../../context/CRMContext";
 
 
 const EditarCliente = () => {
+
+    const [auth, setAuth] = useContext(CRMContext)
 
     //Obtener el id por Params
     let { id } = useParams();
@@ -25,7 +28,11 @@ const [cliente, setCliente] = useState({
 
     const consultarApi = async () => {
 
-        const { data } = await clienteAxios.get(`/clientes/${id}`)
+        const { data } = await clienteAxios.get(`/clientes/${id}` , {
+            headers: {
+                Authorization: `Bearer ${auth.token} `
+              }
+         })
                         setCliente(data)
 
     }
@@ -56,7 +63,11 @@ const onValidate = () => {
 }
 
     const actualizarDatos = async () => {
-        await clienteAxios.put(`/clientes/${id}`, cliente)
+        await clienteAxios.put(`/clientes/${id}`, cliente, {
+            headers: {
+                Authorization: `Bearer ${auth.token} `
+              }
+        } )
         .then(res => {
             if (res.data.code === 11000) {
              Swal.fire({
